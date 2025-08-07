@@ -3,8 +3,8 @@ package com.example.gronik_groceryapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-
+import com.example.gronik_groceryapp.ui.GroceryApp
+;
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,10 +13,4 @@ class MainActivity : ComponentActivity() {
             GroceryApp()
         }
     }
-}
-
-@Composable
-fun GroceryApp() {
-    // This will be the root of your Compose UI
-    // We will build the rest of the UI here
 }
