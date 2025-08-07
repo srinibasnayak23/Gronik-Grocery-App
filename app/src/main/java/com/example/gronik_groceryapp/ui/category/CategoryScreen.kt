@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -16,7 +17,7 @@ import com.example.gronik_groceryapp.ui.theme.Gronik_GroceryAppTheme
 
 @Composable
 fun CategoryScreen() {
-    Column(
+ Column(
 
 
         modifier = Modifier
@@ -36,7 +37,8 @@ fun CategoryScreen() {
         ) {
             items(categories) { category ->
                 CategoryItem(categoryName = category) {
-                    // TODO: Implement navigation to the specific category screen (e.g., CategoryFruitsScreen)
+                    // Assuming you have a route like "category_products/{categoryName}"
+                    // findNavController().navigate("category_products/${category.lowercase()}")
                     // You'll need to pass the category name to the destination
                 }
             }
@@ -60,7 +62,9 @@ fun CategoryItem(categoryName: String, onClick: () -> Unit) {
                 .clickable(onClick = onClick),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = categoryName,
+ Text(
+ text = categoryName,
+ fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center)
         }

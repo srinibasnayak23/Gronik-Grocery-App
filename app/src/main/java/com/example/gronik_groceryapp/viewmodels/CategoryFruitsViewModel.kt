@@ -4,18 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gronik_groceryapp.data.dao.ProductDao
 import com.example.gronik_groceryapp.data.model.Product
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(private val productDao: ProductDao) : ViewModel() {
-    private val _products = MutableStateFlow<List<Product>>(emptyList())
-    val products: StateFlow<List<Product>> = _products
-
-    init {
-        viewModelScope.launch {
-            productDao.getAllProducts().collect { _products.value = it }
-        }
-    }
+@HiltViewModel
+class CategoryFruitsViewModel @Inject constructor(
+    private val productDao: ProductDao
+) : ViewModel() {
 
     fun updateProductQuantity(product: Product, newQuantity: Int) {
         viewModelScope.launch {

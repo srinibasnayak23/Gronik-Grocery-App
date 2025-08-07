@@ -11,23 +11,27 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.gronik_groceryapp.R
+import com.example.gronik_groceryapp.data.model.Offer
 
 @Composable
 fun OffersScreen() {
+    // Placeholder list of offers
+    val offers = listOf(
+        Offer(1, "Summer Sale!", "Get up to 50% off on select items.", R.drawable.offer1_bg),
+        Offer(2, "Buy One Get One Free", "On all fresh produce this week.", R.drawable.offert2_bg),
+        Offer(3, "Weekend Special", "20% off on dairy products.", R.drawable.img_3)
+    )
     Column(
         modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
     ) {
-        // TODO: Implement UI for displaying offers
-        Text(text = "Offers Screen (Implementation Pending)")
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -38,14 +42,13 @@ fun OffersScreen() {
             }
         }
     }
+
 }
 
 
 @Preview(showBackground = true)
 @Composable
 fun OffersScreenPreview() {
-    OffersScreen()
-}
 
 
 @Composable
@@ -56,8 +59,13 @@ fun OfferItem(offerTitle: String, offerDescription: String) {
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
-        ) {
-            Text(text = offerTitle, style = MaterialTheme.typography.titleMedium)
+ ) {
+ Image(
+ painter = painterResource(id = offerImageResId),
+ contentDescription = offerTitle,
+ modifier = Modifier.fillMaxWidth().height(150.dp),
+ contentScale = ContentScale.Crop
+ )
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = offerDescription, style = MaterialTheme.typography.bodyMedium)
         }

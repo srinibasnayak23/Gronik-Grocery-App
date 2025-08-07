@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gronik_groceryapp.data.model.Product
 import com.example.gronik_groceryapp.ui.product.ProductItem
@@ -17,17 +18,17 @@ import com.example.gronik_groceryapp.viewmodels.CartViewModel
 
 @Composable
 fun CartScreen(cartViewModel: CartViewModel = viewModel()) {
+ val cartItems by cartViewModel.cartItems.collectAsState(initial = emptyList())
+ val totalCartValue by cartViewModel.totalCartValue.collectAsState(initial = 0.0)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-
-            .padding(16.dp),
+ .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Shopping Cart")
         Spacer(modifier = Modifier.height(16.dp))
-
-        val cartItems by cartViewModel.cartItems.collectAsState()
 
         if (cartItems.isEmpty()) {
             Box(
@@ -35,30 +36,20 @@ fun CartScreen(cartViewModel: CartViewModel = viewModel()) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = "Your cart is empty.")
-
             }
         } else {
             LazyColumn(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.weight(1f)
             ) {
                 items(cartItems) { item ->
- ProductItem(product = item)
+ ProductItem(product = item, onQuantityChange = { product, newQuantity ->
+ cartViewModel.updateProductQuantity(product, newQuantity)
+ })
  Spacer(modifier = Modifier.height(8.dp))
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Total: $${calculateTotalPrice(cartItems)}") // Display total price
+            Text(text = "Total: $${String.format("%.2f", totalCartValue)}", fontWeight = FontWeight.Bold)
         }
     }
 }
-
-fun calculateTotalPrice(cartItems: List<Product>): Double {
-    var total = 0.0
-    for (item in cartItems) {
-        total += item.price * item.quantity
-    }
-    return total
-}
-
-
 

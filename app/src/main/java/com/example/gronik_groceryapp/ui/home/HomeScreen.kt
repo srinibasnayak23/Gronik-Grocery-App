@@ -64,6 +64,9 @@ fun HomeScreen() {
         ) {
             items(products) { product ->
  ProductItem(product = product)
+ onQuantityChange = { updatedProduct, newQuantity ->
+ homeViewModel.updateProductQuantity(updatedProduct, newQuantity)
+                }
             }
         }
     }
