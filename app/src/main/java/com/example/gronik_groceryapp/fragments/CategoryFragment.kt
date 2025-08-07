@@ -3,30 +3,22 @@ package com.example.gronik_groceryapp.fragments
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.gronik_groceryapp.R
-import com.example.gronik_groceryapp.databinding.FragmentCategoryBinding
+import androidx.compose.ui.platform.ComposeView
+import com.example.gronik_groceryapp.ui.category.CategoryScreen
 
 class CategoryFragment : Fragment() {
 
-    private var _binding: FragmentCategoryBinding? = null
-    private val binding get() = _binding!!
 
 //    private lateinit var viewModel: CategoryViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCategoryBinding.inflate(inflater, container, false)
+ return ComposeView(requireContext()).apply {
+ setContent {
+ CategoryScreen()
+ }
+ }
 
-        binding.fruitsCategory.setOnClickListener {
-            openFragment(CategoryFruitsFragments())
-        }
-
-        binding.backBtn.setOnClickListener {
-            parentFragmentManager.popBackStack()
-        }
-
-        return binding.root
     }
 
     override fun onDestroyView() {

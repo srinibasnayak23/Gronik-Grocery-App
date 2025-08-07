@@ -2,26 +2,23 @@ package com.example.gronik_groceryapp.fragments
 
 import android.os.Bundle
 import android.view.*
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.gronik_groceryapp.databinding.FragmentOrdersBinding
+import com.example.gronik_groceryapp.ui.orders.OrdersScreen
 import com.example.gronik_groceryapp.viewmodels.OrdersViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OrdersFragment : Fragment() {
-
-    private var _binding: FragmentOrdersBinding? = null
-    private val binding get() = _binding!!
 
     private lateinit var viewModel: OrdersViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentOrdersBinding.inflate(inflater, container, false)
+ return ComposeView(requireContext()).apply {
+ setContent {
+ OrdersScreen()
+ }
+ }
 
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

@@ -19,6 +19,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            isDebuggable = true
+            isMinifyEnabled = false
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -33,6 +37,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+        freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.13"
     }
     buildFeatures {
         viewBinding = true
@@ -58,5 +66,16 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    debugImplementation(libs.androidx.ui.test.manifest)   
+
+    // Room Components
+    val room_version = "2.6.1" // Use the latest version
+
+
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version") // Kotlin Extensions for Room
+    ksp("androidx.room:room-compiler:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version") // For Java
+    // To use Kotlin Symbol Processing (KSP) for Room, add this:
+    // ksp("androidx.room:room-compiler:$room_version")
 }
