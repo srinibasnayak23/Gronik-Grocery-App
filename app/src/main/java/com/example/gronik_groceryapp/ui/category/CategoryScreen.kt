@@ -1,10 +1,15 @@
 package com.example.gronik_groceryapp.ui.category
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.gronik_groceryapp.ui.theme.Gronik_GroceryAppTheme
@@ -12,6 +17,8 @@ import com.example.gronik_groceryapp.ui.theme.Gronik_GroceryAppTheme
 @Composable
 fun CategoryScreen() {
     Column(
+
+
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
@@ -21,18 +28,24 @@ fun CategoryScreen() {
         Text(text = "Product Categories", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Placeholder for displaying categories
-        // You can replace this with a LazyColumn or LazyVerticalGrid to display actual categories
-        CategoryItemPlaceholder("Fruits")
-        CategoryItemPlaceholder("Vegetables")
-        CategoryItemPlaceholder("Grains")
-        CategoryItemPlaceholder("Dairy")
-        // Add more placeholder items as needed
+
+        val categories = listOf("Fruits", "Vegetables", "Grains", "Dairy", "Meat", "Seafood", "Bakery", "Beverages") // Example categories
+
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(categories) { category ->
+                CategoryItem(categoryName = category) {
+                    // TODO: Implement navigation to the specific category screen (e.g., CategoryFruitsScreen)
+                    // You'll need to pass the category name to the destination
+                }
+            }
+        }
     }
 }
 
 @Composable
-fun CategoryItemPlaceholder(categoryName: String) {
+fun CategoryItem(categoryName: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,12 +53,16 @@ fun CategoryItemPlaceholder(categoryName: String) {
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Box(
+
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .clickable(onClick = onClick),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = categoryName, style = MaterialTheme.typography.bodyLarge)
+            Text(text = categoryName,
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Center)
         }
     }
 }

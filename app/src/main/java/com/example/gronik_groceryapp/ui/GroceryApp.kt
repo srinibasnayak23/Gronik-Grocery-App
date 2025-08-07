@@ -13,6 +13,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.gronik_groceryapp.R
+import com.example.gronik_groceryapp.data.database.ProductDatabase
+import com.example.gronik_groceryapp.ui.cart.CartScreen
+import com.example.gronik_groceryapp.ui.category.CategoryFruitsScreen
+import com.example.gronik_groceryapp.ui.category.CategoryScreen
+import com.example.gronik_groceryapp.ui.home.HomeScreen
+import com.example.gronik_groceryapp.ui.offers.OffersScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,20 +36,24 @@ fun GroceryApp() {
  modifier = Modifier.padding(innerPadding)
  ) {
             composable(Screen.Home.route) {
- // Replace with your actual Home Screen Composable
- // HomeScreen()
+ HomeScreen()
             }
             composable(Screen.Category.route) {
- // Replace with your actual Category Screen Composable
- // CategoryScreen()
+ CategoryScreen(navController = navController)
             }
             composable(Screen.Cart.route) {
- // Replace with your actual Cart Screen Composable
- // CartScreen()
+ CartScreen()
             }
             composable(Screen.Offers.route) {
- // Replace with your actual Offers Screen Composable
- // OffersScreen()
+ OffersScreen()
+            }
+            composable(Screen.Orders.route) {
+ // Placeholder for Orders Screen Composable
+ Text("Orders Screen")
+            }
+            composable(Screen.CategoryFruits.route) {
+ // CategoryFruitsScreen expects a category ID, we'll need to pass it later
+ CategoryFruitsScreen()
             }
             composable(Screen.Orders.route) {
                 // Placeholder for Orders Screen Composable
@@ -91,4 +101,5 @@ sealed class Screen(val route: String, @StringRes val resourceId: Int, val icon:
     object Cart : Screen("cart", R.string.title_cart, Icons.Filled.ShoppingCart)
     object Offers : Screen("offers", R.string.title_offers, Icons.Filled.Discount) // Assuming you have an icon for offers
     object Orders : Screen("orders", R.string.title_orders, Icons.Filled.Receipt) // Assuming you have an icon for orders
+    object CategoryFruits : Screen("category_fruits", R.string.app_name) // Assuming no icon for sub-screens
 }

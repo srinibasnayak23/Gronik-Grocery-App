@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.gronik_groceryapp.data.dao.ProductDao
 import com.example.gronik_groceryapp.data.model.Product
 
 @Composable
@@ -18,7 +19,7 @@ fun ProductItem(
     product: Product,
     onQuantityChange: (Product, Int) -> Unit // Lambda to handle quantity changes
 ) {
-    Card(
+    Card( // Removed onQuantityChange parameter as ProductDao is passed directly
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
@@ -46,11 +47,15 @@ fun ProductItem(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { onQuantityChange(product, product.quantity - 1) }) {
+                IconButton(onClick = {
+                    if (product.quantity > 0) {
+                        onQuantityChange(product, product.quantity - 1)
+                    }
+                }) {
                     Icon(imageVector = Icons.Default.Remove, contentDescription = "Decrease Quantity")
                 }
                 Text(text = product.quantity.toString(), style = MaterialTheme.typography.bodyMedium)
-                IconButton(onClick = { onQuantityChange(product, product.quantity + 1) }) {
+                IconButton(onClick = { onQuantityChange(product, product.quantity + 1) }) { // Quantity can always be increased
                     Icon(imageVector = Icons.Default.Add, contentDescription = "Increase Quantity")
                 }
             }

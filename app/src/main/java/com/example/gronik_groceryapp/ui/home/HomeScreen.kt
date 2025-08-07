@@ -1,15 +1,21 @@
 package com.example.gronik_groceryapp.ui.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.gronik_groceryapp.ui.theme.Gronik_GroceryAppTheme
 import com.example.gronik_groceryapp.ui.product.ProductItem
+import coil.compose.rememberAsyncImagePainter
+import com.example.gronik_groceryapp.R
 import androidx.compose.foundation.lazy.items
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gronik_groceryapp.viewmodels.HomeViewModels
@@ -32,18 +38,14 @@ fun HomeScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         // Banners Placeholder
-        Card(
+        Image(
+            painter = rememberAsyncImagePainter(R.drawable.offer1_bg), // Replace with actual banner image resource
+            contentDescription = "Promotional Banner",
+            contentScale = ContentScale.Crop,
             modifier = Modifier
-                .fillMaxWidth()
-                .height(150.dp)
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("Banner Area")
-            }
-        }
+                .fillMaxWidth().height(150.dp)
+                .clip(RoundedCornerShape(8.dp))
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 

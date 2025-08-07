@@ -16,9 +16,7 @@ import com.example.gronik_groceryapp.ui.product.ProductItem
 import com.example.gronik_groceryapp.viewmodels.CartViewModel
 
 @Composable
-fun CartScreen(
-    cartItems: List<Product> // Assuming cartItems is a list of Product objects
-) {
+fun CartScreen(cartViewModel: CartViewModel = viewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -29,12 +27,15 @@ fun CartScreen(
         Text(text = "Shopping Cart")
         Spacer(modifier = Modifier.height(16.dp))
 
+        val cartItems by cartViewModel.cartItems.collectAsState()
+
         if (cartItems.isEmpty()) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = "Your cart is empty.")
+
             }
         } else {
             LazyColumn(
@@ -42,9 +43,22 @@ fun CartScreen(
             ) {
                 items(cartItems) { item ->
  ProductItem(product = item)
-                    Spacer(modifier = Modifier.height(8.dp))
+ Spacer(modifier = Modifier.height(8.dp))
                 }
             }
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = "Total: $${calculateTotalPrice(cartItems)}") // Display total price
         }
     }
 }
+
+fun calculateTotalPrice(cartItems: List<Product>): Double {
+    var total = 0.0
+    for (item in cartItems) {
+        total += item.price * item.quantity
+    }
+    return total
+}
+
+
+
